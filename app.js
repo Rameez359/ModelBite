@@ -4,32 +4,23 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 const expressWinston = require('express-winston');
 const { transports, format } = require('winston');
-  
+const {logger} = require('./logger/logger') 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-app.use(expressWinston.logger({
-  transports :[
-    new transports.Console(),
-    new transports.File({
-      level: 'warn',
-      filename: 'logsWarnings.log'
-    }),
-    new transports.File({
-      level:'error',
-      filename: 'logsError.log'
-    }),
-  ],
-  format: format.combine(
-    format.json(),
-    format.timestamp(),
-    format.prettyPrint()
-  ),
-  statusLevels: true
+//Database connection
+// const mongooseMiddleware = require("./controllers/dbController");
+// app.use(mongooseMiddleware.connectTOMongoDB);
 
-}))
+// app.use(expressWinston.logger({
+//   winstonInstance:logger,
+//   statusLevels: true
+// }));
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

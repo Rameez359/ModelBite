@@ -1,6 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const { connectTOMongoDB } = require("./dbController");
-
+const connectTOMongoDB = require("./dbController");
 const projectSchema = new mongoose.Schema({
   title: String,
   description: String,
@@ -13,9 +12,14 @@ const createProject = async (payload) => {
     }
     const { title, description } = payload;
     if (!(title && description)) {
-        return { response: "Invalid title or description", statusCode: 400 };
+      return { response: "Invalid title or description", statusCode: 400 };
     }
+    const project = new Project({
+      title: title,
+      description: description,
+    });
 
+    await project.save();
   } catch (error) {
     return {
       response: `Exception in add flock comment : ${error}`,
